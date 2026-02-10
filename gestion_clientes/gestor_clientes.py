@@ -27,7 +27,7 @@ class GestorClientes:
 
     def __init__(self):
         
-        # Para crear el diccionario
+        # Para crear el diccionario ---> revisar si la clase es privada o protegida
 
         self._clientes = {
             "regular": [],
@@ -63,5 +63,10 @@ class GestorClientes:
         """
         Debería mostrar todos los clientes según su tipo
         """
-
+        """
+        Verificar si hay al menos 1 cliente registrado
+        Que recorra el diccionario
+        Que elimine clientes
+        
+        """
         
