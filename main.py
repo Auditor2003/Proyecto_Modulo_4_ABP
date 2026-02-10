@@ -49,5 +49,4 @@ def main(): # Función principal del programa y se ejecuta al iniciar la aplicac
         else:
             print("Opción no válida. Intente nuevamente.")
 
-        ### No se han creado aun las clases ni las fubnciones ### 
-        ### Sólo traigo esquema inicial de ABP 3 ###
+# Sin separadores visuales aún, pero ok main
