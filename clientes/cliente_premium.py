@@ -7,9 +7,9 @@ como un descuento porcentual.
 from clientes.cliente import Cliente
 
 
-class ClientePremium(Cliente):
+class Cliente_Premium(Cliente):
     """
-    Clase ClientePremium.
+    Clase Cliente_Premium.
     Hereda de Cliente y agrega un atributo adicional:
     descuento: porcentaje de descuento del cliente.
     """
@@ -17,7 +17,7 @@ class ClientePremium(Cliente):
     def __init__(self, id_cliente, nombre, email, descuento, estado=True):
 
 """
-        Constructor de ClientePremium.
+        Constructor de Cliente_Premium.
         Parámetros:
         - id_cliente: identificador único del cliente
         - nombre: nombre del cliente

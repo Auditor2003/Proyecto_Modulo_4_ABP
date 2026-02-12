@@ -1,56 +1,44 @@
 """
+cliente_corporativo.py
 
-Representa a un cliente con beneficios especiales (descuento)
-
+Este módulo contiene la clase ClienteCorporativo.
+Representa a un cliente de tipo empresa.
 """
-# Aquí traigo clase padre Cliente
+
 from clientes.cliente import Cliente
 
 
-class ClientePremium(Cliente):
+class Cliente_Corporativo(Cliente):
     """
-    Hereda de Cliente y agrega un atributo adicional:
-    descuento: % descuento asociado al cliente.
+    ClienteCorporativo
+
+    Hereda de Cliente y agrega:
+    - Razón social
+    - RUT de empresa
+    - Nombre de contacto
     """
 
-    def __init__(self, id_cliente, nombre, email, descuento, estado=True):
+    def __init__(self, id_cliente, nombre, email, razon_social, rut_empresa, contacto, estado=True):
         """
-        Creador de la clase ClientePremium.
+        Constructor de Cliente_Corporativo.
 
-        Parámetros:
-        - id_cliente: identificador único del cliente
-        - nombre: nombre del cliente
-        - email: correo electrónico del cliente
-        - descuento: porcentaje de descuento (entre 0 y 100)
-        - estado: indica si el cliente está activo (True por defecto)
-
-        Se llama primero al creador de la clase base (Cliente)
-        para inicializar los atributos comunes.
+        Parámetros adicionales:
+        - razon_social: nombre legal de la empresa
+        - rut_empresa: identificador de la empresa
+        - contacto: persona de contacto
         """
-
-        # Llamamos al creadr de la clase padre (Cliente)
         super().__init__(id_cliente, nombre, email, estado)
-
-        # Verificamos que el descuento sea un número (int o float)
-        if not isinstance(descuento, (int, float)):
-            raise TypeError("El descuento debe ser un valor numérico.")
-
-        # Verificamos que el descuento esté dentro del rango permitido
-        # No puede ser negativo ni mayor a 100%
-        if descuento < 0 or descuento > 100:
-            raise ValueError("El descuento debe estar entre 0 y 100.")
-
-        # Si pasa las validaciones, se asigna el atributo
-        # Usamos self directamente (sin property) para mayor claridad
-        self.descuento = descuento
+        self._razon_social = razon_social
+        self._rut_empresa = rut_empresa
+        self._contacto = contacto
 
     def __str__(self):
         """
-        Traigo datos de la superclase y le agrego descuento encima 
-        Indicado por el profe como overwrite
-        Sobrescribe el método __str__ de la clase base,
-        agregando la información del descuento.
+        Representación en texto del cliente corporativo.
+        Sobrescribe el método de la clase base.
         """
-
-        # Obtenemos la representación base desde la clase padre
         base = super().__str__()
+        return (
+            f"{base} | Empresa: {self._razon_social} "
+            f"| RUT: {self._rut_empresa} | Contacto: {self._contacto}"
+        )

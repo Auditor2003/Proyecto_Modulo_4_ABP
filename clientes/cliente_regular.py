@@ -8,7 +8,7 @@ from clientes.cliente import Cliente
 
 class ClienteRegular(Cliente):
     """
-    ClienteRegular
+    Cliente_Regular
 
     No agrega nuevos atributos ni comportamientos.
     Utiliza exactamente lo que hereda de Cliente.
