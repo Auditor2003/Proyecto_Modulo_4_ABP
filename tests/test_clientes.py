@@ -8,9 +8,9 @@ from clientes.cliente_premium import Cliente_Premium
 
 class TestClientes(unittest.TestCase):
 
-    # -------------------------
+    # *************************
     # Probamos creación básica
-    # -------------------------
+    # *************************
 
     def test_creacion_cliente(self):
 
@@ -22,9 +22,9 @@ class TestClientes(unittest.TestCase):
         # Verificamos que el nombre sea correcto
         self.assertEqual(cliente.get_nombre(), "Diego")
 
-    # -------------------------
+    # *************************
     # Probamos validación email
-    # -------------------------
+    # *************************
 
     def test_validar_email(self):
 
@@ -32,9 +32,9 @@ class TestClientes(unittest.TestCase):
 
         self.assertTrue(cliente.validar_email())
 
-    # -------------------------
+    # *************************
     # Probamos descuento válido
-    # -------------------------
+    # *************************
 
     def test_descuento_valido(self):
 
@@ -42,9 +42,9 @@ class TestClientes(unittest.TestCase):
 
         self.assertEqual(premium.get_descuento(), 20)
 
-    # -------------------------
+    # *************************
     # Probamos descuento inválido
-    # -------------------------
+    # *************************
 
     def test_descuento_invalido(self):
 

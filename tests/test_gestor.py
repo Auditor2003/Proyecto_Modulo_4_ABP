@@ -16,9 +16,9 @@ class TestGestorClientes(unittest.TestCase):
         # Creamos un gestor nuevo
         self.gestor = GestorClientes()
 
-    # -------------------------
+    # *************************
     # Probamos agregar cliente
-    # -------------------------
+    # *************************
 
     def test_agregar_cliente(self):
 
@@ -28,9 +28,9 @@ class TestGestorClientes(unittest.TestCase):
 
         self.assertIsNotNone(cliente)
 
-    # -------------------------
+    # *************************
     # Probamos cliente duplicado
-    # -------------------------
+    # *************************
 
     def test_cliente_duplicado(self):
 
@@ -39,9 +39,9 @@ class TestGestorClientes(unittest.TestCase):
         with self.assertRaises(ClienteDuplicadoError):
             self.gestor.crear_cliente_regular("20", "Laura", "laura@email.com")
 
-    # -------------------------
+    # *************************
     # Probamos eliminar cliente
-    # -------------------------
+    # *************************
 
     def test_eliminar_cliente(self):
 
@@ -51,9 +51,9 @@ class TestGestorClientes(unittest.TestCase):
 
         self.assertIsNone(self.gestor.buscar_cliente("30"))
 
-    # -------------------------
+    # *************************
     # Probamos eliminar inexistente
-    # -------------------------
+    # *************************
 
     def test_eliminar_no_existente(self):
 

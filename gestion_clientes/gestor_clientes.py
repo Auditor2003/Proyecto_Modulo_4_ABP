@@ -69,7 +69,7 @@ class GestorClientes:
 
                 self._clientes[tipo].append(cliente)
 
-    # ---------------- CREAR CLIENTES ----------------
+    # CREAR CLIENTES
 
     def crear_cliente_regular(self, id_cliente, nombre, email):
 
@@ -80,7 +80,7 @@ class GestorClientes:
 
         self._agregar_cliente(cliente)
 
-    # ---------------- MÉTODOS INTERNOS ----------------
+    # MÉTODOS INTERNOS
 
     def _agregar_cliente(self, cliente):
 
@@ -99,7 +99,7 @@ class GestorClientes:
         guardar_clientes(self._clientes)
         registrar_evento("Cliente agregado correctamente.")
 
-    # ---------------- LISTAR ----------------
+    # LISTAR
 
     def listar_clientes(self):
 
@@ -107,11 +107,11 @@ class GestorClientes:
             print("No hay clientes registrados.")
             return
 
-        print("\n=== Listado de Clientes ===")
+        print("Listado de Clientes")
 
         for tipo, lista_clientes in self._clientes.items():
 
-            print(f"\nClientes tipo {tipo.capitalize()}:")
+            print(f"Clientes tipo {tipo.capitalize()}:")
 
             if not lista_clientes:
                 print("No hay clientes de este tipo.")
@@ -120,7 +120,7 @@ class GestorClientes:
             for cliente in lista_clientes:
                 print(cliente)
 
-    # ---------------- BUSCAR ----------------
+    # BUSCAR
 
     def buscar_cliente(self, id_cliente):
 
@@ -131,7 +131,7 @@ class GestorClientes:
 
         return None
 
-    # ---------------- ELIMINAR ----------------
+    # ELIMINAR
 
     def eliminar_cliente(self, id_cliente):
 
