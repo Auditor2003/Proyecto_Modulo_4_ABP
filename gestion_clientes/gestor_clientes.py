@@ -9,6 +9,8 @@ from clientes.clientes import Cliente
 from clientes.cliente_regular import Cliente_Regular
 from clientes.cliente_premium import Cliente_Premium
 from clientes.cliente_corporativo import Cliente_Corporativo
+from persistencia.cliente_json import guardar_clientes, cargar_clientes
+
 
 
 class GestorClientes:
