@@ -34,34 +34,41 @@ class GestorClientes:
         # Cargamos datos desde el archivo JSON si existe
         datos = cargar_clientes()
 
-        for tipo, lista in datos.items():
+        # Recorremos los datos guardados y reconstruimos objetos reales
+        for cliente_data in datos:
 
-            for cliente_data in lista:
+            tipo = cliente_data["tipo"]
 
-                if tipo == "regular":
-                    cliente = Cliente_Regular(
-                        cliente_data["id"],
-                        cliente_data["nombre"],
-                        cliente_data["email"]
-                    )
+            if tipo == "Cliente_Regular":
+                cliente = Cliente_Regular(
+                    cliente_data["id"],
+                    cliente_data["nombre"],
+                    cliente_data["email"],
+                    cliente_data["estado"]
+                )
 
-                elif tipo == "premium":
-                    cliente = Cliente_Premium(
-                        cliente_data["id"],
-                        cliente_data["nombre"],
-                        cliente_data["email"],
-                        cliente_data["descuento"]
-                    )
+            elif tipo == "Cliente_Premium":
+                cliente = Cliente_Premium(
+                    cliente_data["id"],
+                    cliente_data["nombre"],
+                    cliente_data["email"],
+                    cliente_data["descuento"],
+                    cliente_data["estado"]
+                )
 
-                elif tipo == "corporativo":
-                    cliente = Cliente_Corporativo(
-                        cliente_data["id"],
-                        cliente_data["nombre"],
-                        cliente_data["email"],
-                        cliente_data["empresa"]
-                    )
+            elif tipo == "Cliente_Corporativo":
+                cliente = Cliente_Corporativo(
+                    cliente_data["id"],
+                    cliente_data["nombre"],
+                    cliente_data["email"],
+                    cliente_data["razon_social"],
+                    cliente_data["rut_empresa"],
+                    cliente_data["contacto"],
+                    cliente_data["estado"]
+                )
 
-                self._clientes[cliente.get_id()] = cliente
+            # Guardamos el cliente reconstruido en el diccionario interno
+            self._clientes[cliente.get_id()] = cliente
 
     
     # CREAR CLIENTE REGULAR
@@ -107,7 +114,7 @@ class GestorClientes:
     # CREAR CLIENTE CORPORATIVO
     
 
-    def crear_cliente_corporativo(self, id_cliente, nombre, email, empresa):
+    def crear_cliente_corporativo(self, id_cliente, nombre, email, razon_social, rut_empresa, contacto):
 
         if id_cliente in self._clientes:
             raise ClienteDuplicadoError("El cliente ya existe.")
@@ -115,7 +122,14 @@ class GestorClientes:
         if not validar_email(email):
             raise ValidacionError("Email inválido.")
 
-        cliente = Cliente_Corporativo(id_cliente, nombre, email, empresa)
+        cliente = Cliente_Corporativo(
+            id_cliente,
+            nombre,
+            email,
+            razon_social,
+            rut_empresa,
+            contacto
+        )
 
         self._clientes[id_cliente] = cliente
 
@@ -178,5 +192,3 @@ class GestorClientes:
         guardar_clientes(self._clientes)
 
         registrar_evento(f"Cliente editado: {id_cliente}")
-
-

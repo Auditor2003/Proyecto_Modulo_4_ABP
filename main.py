@@ -31,13 +31,22 @@ def main():
                 email = input("Email: ")
 
                 gestor.crear_cliente_regular(id_cliente, nombre, email)
+                print("Cliente agregado correctamente.")
 
             elif opcion == "2":
-                gestor.listar_clientes()
+                clientes = gestor.listar_clientes()
+
+                if not clientes:
+                    print("No hay clientes registrados.")
+                else:
+                    print("\nLista de clientes:")
+                    for cliente in clientes:
+                        print(cliente)
 
             elif opcion == "3":
                 id_cliente = input("ID a eliminar: ")
                 gestor.eliminar_cliente(id_cliente)
+                print("Cliente eliminado correctamente.")
 
             elif opcion == "4":
                 print("Saliendo del sistema...")
