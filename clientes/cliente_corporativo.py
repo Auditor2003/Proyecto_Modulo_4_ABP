@@ -1,4 +1,4 @@
-# Cliente Corporativo.
+
 # Representa una empresa.
 # Tiene datos adicionales aparte de los normales.
 
