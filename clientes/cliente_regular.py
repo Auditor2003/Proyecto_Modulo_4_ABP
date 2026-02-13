@@ -1,11 +1,11 @@
-# ClienteRegular.
+# Cliente_Regular.
 # No tiene beneficios especiales.
 # Es el cliente más básico del sistema.
 
 from clientes.clientes import Cliente
 
 
-class ClienteRegular(Cliente):
+class Cliente_Regular(Cliente):
     # Hereda todo de Cliente.
     # No agrega nada nuevo.
 

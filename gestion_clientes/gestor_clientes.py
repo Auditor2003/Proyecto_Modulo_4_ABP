@@ -6,7 +6,7 @@
 from clientes.clientes import Cliente
 
 # Importamos las subclases
-from clientes.cliente_regular import ClienteRegular
+from clientes.cliente_regular import Cliente_Regular
 from clientes.cliente_premium import Cliente_Premium
 from clientes.cliente_corporativo import Cliente_Corporativo
 
@@ -27,7 +27,8 @@ class GestorClientes:
     def agregar_cliente(self, cliente):
         # Primero verificamos que el objeto realmente sea un Cliente.
         # Si no es un Cliente, no lo aceptamos.
-        if not isinstance(cliente, Cliente):
+
+        if not isinstance(cliente, Cliente):   # Ref. Clase 1 ---> animal.py
             print("Error: el objeto no es un Cliente válido.")
             return
 
@@ -39,7 +40,7 @@ class GestorClientes:
         # Ahora identificamos qué tipo de cliente es.
         # Según su tipo, lo agregamos a la lista correspondiente.
 
-        if isinstance(cliente, ClienteRegular):
+        if isinstance(cliente, Cliente_Regular):
             self._clientes["regular"].append(cliente)
 
         elif isinstance(cliente, Cliente_Premium):
@@ -66,7 +67,7 @@ class GestorClientes:
         # Recorremos cada tipo dentro del diccionario.
         for tipo, lista_clientes in self._clientes.items():
 
-            print(f"\nClientes tipo {tipo.capitalize()}:")
+            print(f"Clientes tipo {tipo.capitalize()}:")
 
             # Si esa lista específica está vacía, lo indicamos.
             if not lista_clientes:
