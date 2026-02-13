@@ -10,137 +10,173 @@ from clientes.cliente_regular import Cliente_Regular
 from clientes.cliente_premium import Cliente_Premium
 from clientes.cliente_corporativo import Cliente_Corporativo
 
-from persistencia.clientes_json import guardar_clientes, cargar_clientes
 from utilidades.excepciones import (
     ClienteDuplicadoError,
     ClienteNoEncontradoError,
     ValidacionError
 )
 
+from utilidades.validaciones import validar_email
 from utilidades.bitacora_de_registros import registrar_evento
+
+from persistencia.clientes_json import guardar_clientes, cargar_clientes
 
 
 class GestorClientes:
-    # Esta clase administra todos los clientes del sistema.
 
+    # Constructor
     def __init__(self):
 
-        # Cargamos los datos desde JSON
+        # Diccionario donde se almacenan los clientes
+        # La clave será el ID
+        self._clientes = {}
+
+        # Cargamos datos desde el archivo JSON si existe
         datos = cargar_clientes()
 
-        self._clientes = {
-            "regular": [],
-            "premium": [],
-            "corporativo": []
-        }
-
-        # Reconstruimos objetos Cliente desde los datos cargados
         for tipo, lista in datos.items():
 
-            for datos_cliente in lista:
+            for cliente_data in lista:
 
                 if tipo == "regular":
                     cliente = Cliente_Regular(
-                        datos_cliente["_id"],
-                        datos_cliente["_nombre"],
-                        datos_cliente["_email"],
-                        datos_cliente["_estado"]
+                        cliente_data["id"],
+                        cliente_data["nombre"],
+                        cliente_data["email"]
                     )
 
                 elif tipo == "premium":
                     cliente = Cliente_Premium(
-                        datos_cliente["_id"],
-                        datos_cliente["_nombre"],
-                        datos_cliente["_email"],
-                        datos_cliente["_descuento"],
-                        datos_cliente["_estado"]
+                        cliente_data["id"],
+                        cliente_data["nombre"],
+                        cliente_data["email"],
+                        cliente_data["descuento"]
                     )
 
                 elif tipo == "corporativo":
                     cliente = Cliente_Corporativo(
-                        datos_cliente["_id"],
-                        datos_cliente["_nombre"],
-                        datos_cliente["_email"],
-                        datos_cliente["_razon_social"],
-                        datos_cliente["_rut_empresa"],
-                        datos_cliente["_contacto"],
-                        datos_cliente["_estado"]
+                        cliente_data["id"],
+                        cliente_data["nombre"],
+                        cliente_data["email"],
+                        cliente_data["empresa"]
                     )
 
-                self._clientes[tipo].append(cliente)
+                self._clientes[cliente.get_id()] = cliente
 
-    # CREAR CLIENTES
+    
+    # CREAR CLIENTE REGULAR
+    
 
     def crear_cliente_regular(self, id_cliente, nombre, email):
 
-        cliente = Cliente_Regular(id_cliente, nombre, email)
+        if id_cliente in self._clientes:
+            raise ClienteDuplicadoError("El cliente ya existe.")
 
-        if not cliente.validar_email():
+        if not validar_email(email):
             raise ValidacionError("Email inválido.")
 
-        self._agregar_cliente(cliente)
+        cliente = Cliente_Regular(id_cliente, nombre, email)
 
-    # MÉTODOS INTERNOS
-
-    def _agregar_cliente(self, cliente):
-
-        if self.buscar_cliente(cliente.get_id()) is not None:
-            raise ClienteDuplicadoError("Ya existe un cliente con ese ID.")
-
-        if isinstance(cliente, Cliente_Regular):
-            self._clientes["regular"].append(cliente)
-
-        elif isinstance(cliente, Cliente_Premium):
-            self._clientes["premium"].append(cliente)
-
-        elif isinstance(cliente, Cliente_Corporativo):
-            self._clientes["corporativo"].append(cliente)
+        self._clientes[id_cliente] = cliente
 
         guardar_clientes(self._clientes)
-        registrar_evento("Cliente agregado correctamente.")
 
-    # LISTAR
+        registrar_evento(f"Cliente regular creado: {id_cliente}")
 
-    def listar_clientes(self):
+    
+    # CREAR CLIENTE PREMIUM
+    
 
-        if all(len(lista) == 0 for lista in self._clientes.values()):
-            print("No hay clientes registrados.")
-            return
+    def crear_cliente_premium(self, id_cliente, nombre, email, descuento):
 
-        print("Listado de Clientes")
+        if id_cliente in self._clientes:
+            raise ClienteDuplicadoError("El cliente ya existe.")
 
-        for tipo, lista_clientes in self._clientes.items():
+        if not validar_email(email):
+            raise ValidacionError("Email inválido.")
 
-            print(f"Clientes tipo {tipo.capitalize()}:")
+        cliente = Cliente_Premium(id_cliente, nombre, email, descuento)
 
-            if not lista_clientes:
-                print("No hay clientes de este tipo.")
-                continue
+        self._clientes[id_cliente] = cliente
 
-            for cliente in lista_clientes:
-                print(cliente)
+        guardar_clientes(self._clientes)
 
-    # BUSCAR
+        registrar_evento(f"Cliente premium creado: {id_cliente}")
+
+    
+    # CREAR CLIENTE CORPORATIVO
+    
+
+    def crear_cliente_corporativo(self, id_cliente, nombre, email, empresa):
+
+        if id_cliente in self._clientes:
+            raise ClienteDuplicadoError("El cliente ya existe.")
+
+        if not validar_email(email):
+            raise ValidacionError("Email inválido.")
+
+        cliente = Cliente_Corporativo(id_cliente, nombre, email, empresa)
+
+        self._clientes[id_cliente] = cliente
+
+        guardar_clientes(self._clientes)
+
+        registrar_evento(f"Cliente corporativo creado: {id_cliente}")
+
+    
+    # BUSCAR CLIENTE
+    
 
     def buscar_cliente(self, id_cliente):
 
-        for lista_clientes in self._clientes.values():
-            for cliente in lista_clientes:
-                if cliente.get_id() == id_cliente:
-                    return cliente
+        return self._clientes.get(id_cliente)
 
-        return None
+    
+    # LISTAR CLIENTES
+    
 
-    # ELIMINAR
+    def listar_clientes(self):
+
+        return list(self._clientes.values())
+
+    
+    # ELIMINAR CLIENTE
+    
 
     def eliminar_cliente(self, id_cliente):
 
-        for lista_clientes in self._clientes.values():
-            for cliente in lista_clientes:
-                if cliente.get_id() == id_cliente:
-                    lista_clientes.remove(cliente)
-                    guardar_clientes(self._clientes)
-                    registrar_evento("Cliente eliminado correctamente.")
-                    return
+        if id_cliente not in self._clientes:
+            raise ClienteNoEncontradoError("Cliente no encontrado.")
 
-        raise ClienteNoEncontradoError("Cliente no encontrado.")
+        del self._clientes[id_cliente]
+
+        guardar_clientes(self._clientes)
+
+        registrar_evento(f"Cliente eliminado: {id_cliente}")
+
+    
+    # EDITAR CLIENTE
+    
+
+    def editar_cliente(self, id_cliente, nuevo_nombre, nuevo_email):
+
+        # Verificamos que el cliente exista
+        if id_cliente not in self._clientes:
+            raise ClienteNoEncontradoError("Cliente no encontrado.")
+
+        # Validamos el nuevo email
+        if not validar_email(nuevo_email):
+            raise ValidacionError("Email inválido.")
+
+        cliente = self._clientes[id_cliente]
+
+        # Actualizamos los datos
+        cliente._nombre = nuevo_nombre
+        cliente._email = nuevo_email
+
+        # Guardamos cambios en el archivo JSON
+        guardar_clientes(self._clientes)
+
+        registrar_evento(f"Cliente editado: {id_cliente}")
+
+
