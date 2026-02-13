@@ -1,23 +1,15 @@
-"""
-Este módulo contiene la clase ClienteRegular.
-Sin beneficios especiales.
-"""
+# ClienteRegular.
+# No tiene beneficios especiales.
+# Es el cliente más básico del sistema.
 
-from clientes.cliente import Cliente
+from clientes.clientes import Cliente
 
 
 class ClienteRegular(Cliente):
-    """
-    Cliente_Regular
-
-    No agrega nuevos atributos ni comportamientos.
-    Utiliza exactamente lo que hereda de Cliente.
-    """
+    # Hereda todo de Cliente.
+    # No agrega nada nuevo.
 
     def __init__(self, id_cliente, nombre, email, estado=True):
-        """
-        Crea ClienteRegular.
-
-        Solo llama al creador de la clase base.
-        """
+        # Solo llama al constructor del padre.
         super().__init__(id_cliente, nombre, email, estado)
+

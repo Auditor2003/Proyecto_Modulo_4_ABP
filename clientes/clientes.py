@@ -1,103 +1,52 @@
-"""
-Este módulo contiene la clase base Cliente.
-
-Representa a un cliente genérico del sistema.
-No es un tipo específico de cliente, sino la base
-para todos los demás (Regular, Premium, Corporativo).
-"""
+# Clase base Cliente.
+# Es la clase papá del sistema.
+# De aquí heredan Regular, Premium y Corporativo.
 
 
 class Cliente:
-    """
-    Clase Cliente (clase base)
-
-    Define los atributos y comportamientos comunes
-    a todos los tipos de clientes.
-    """
+    # Clase base donde viven los datos comunes
+    # a todos los tipos de clientes.
 
     def __init__(self, id_cliente, nombre, email, estado=True):
-        """
-        Constructor de la clase Cliente.
+        # Constructor base.
+        # Guarda la información principal del cliente.
 
-        Parámetros:
-        - id_cliente: identificador único del cliente
-        - nombre: nombre del cliente
-        - email: correo electrónico
-        - estado: indica si el cliente está activo o no
-        """
-
-        # Atributos "protegidos"
-        # (convención: se acceden desde métodos, no directamente)
-
+        # Atributos protegidos (convención con _)
         self._id = id_cliente
         self._nombre = nombre
         self._email = email
         self._estado = estado
 
-    
-    # Métodos Get (según indicó el profe)
-    
-
     def get_id(self):
-        """
-        Devuelve el ID del cliente.
-        """
+        # Devuelve el ID del cliente.
         return self._id
 
     def get_nombre(self):
-        """
-        Devuelve el nombre del cliente.
-        """
+        # Devuelve el nombre.
         return self._nombre
 
     def get_email(self):
-        """
-        Devuelve el email del cliente.
-        """
+        # Devuelve el correo.
         return self._email
 
     def get_estado(self):
-        """
-        Devuelve el estado del cliente (activo / inactivo).
-        """
+        # Indica si está activo o no.
         return self._estado
 
-
-    # Como funcionan (Comportamiento)
-
-
     def validar_email(self):
-        """
-        Valida de forma simple el email del cliente.
-
-        Esta validación es básica y solo demuestra
-        que sabemos dónde ubicar este tipo de lógica.
-        """
-
+        # Validación simple.
+        # Solo revisa que tenga un @.
         return "@" in self._email
 
-
-    # Métodos específicos 
-
-
     def __str__(self):
-        """
-        Representación en texto del cliente.
-
-        Se utiliza al imprimir el objeto.
-        """
+        # Así se muestra el cliente cuando lo imprimimos.
         estado_texto = "Activo" if self._estado else "Inactivo"
         return f"ID: {self._id} | Nombre: {self._nombre} | Email: {self._email} | Estado: {estado_texto}"
 
     def __eq__(self, other):
-        """
-        Compara dos clientes.
-
-        Dos clientes se consideran iguales
-        si tienen el mismo ID.
-        """
-
+        # Dos clientes son iguales si tienen el mismo ID.
         if not isinstance(other, Cliente):
             return False
 
         return self._id == other.get_id()
+

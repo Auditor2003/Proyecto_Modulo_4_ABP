@@ -1,45 +1,33 @@
-"""
-Proyecto Módulo 4 - ABP
-Gestor de Clientes 
+# Proyecto Módulo 4 - ABP
+# Gestor Inteligente de Clientes
+# Este archivo solo controla el programa.
+# No maneja datos directamente ni contiene lógica de negocio.
 
-- Iniciar el programa
-- Crear el gestor de clientes
-- Llamar a las funciones principales igual que modularización de ABP 3
-
-Se supone que NO contiene lógica de negocio.
-Se supone que NO gestiona datos directamente.
-"""
-# Importamos el gestor de clientes
-# El gestor es quien realmente sabe crear, eliminar y listar clientes
-# Misma clases referenciadas del ABP 3 ---> Misma Estructura del Control de Stock
-
-
-# Importamos el gestor de clientes
 from gestion_clientes.gestor_clientes import GestorClientes
 
 
-def main(): # Función principal del programa y se ejecuta al iniciar la aplicación.
+def main():
+    # Creamos el gestor.
+    # Él es el que sabe realmente cómo trabajar con los clientes.
+    gestor = GestorClientes()
 
-    gestor = GestorClientes() # Creamos gestor de clientes donde se almacenarán y administrarán todos los clientes
-
-    print(" Gestor Inteligente de Clientes ")
-    
-    # Menú Inicial
+    print("Gestor Inteligente de Clientes")
 
     while True:
         print("Seleccione una opción:")
-        print("1. Agregar cliente (ejemplo)")
+        print("1. Agregar cliente (demo)")
         print("2. Listar clientes")
         print("3. Salir")
 
         opcion = input("Opción: ")
 
         if opcion == "1":
-            # Aquí solo se ve el uso del gestor
-            print("Funcionalidad de agregar cliente (pendiente de implementación)")
+            # Aquí solo demostramos cómo se llamaría al gestor.
+            # La lógica real debe estar dentro de GestorClientes.
+            print("Funcionalidad de agregar cliente aún en construcción.")
 
         elif opcion == "2":
-            # Aqui va a mostrar los clientes
+            # Le pedimos al gestor que muestre los clientes.
             gestor.listar_clientes()
 
         elif opcion == "3":
@@ -49,4 +37,6 @@ def main(): # Función principal del programa y se ejecuta al iniciar la aplicac
         else:
             print("Opción no válida. Intente nuevamente.")
 
-# Sin separadores visuales aún, pero ok main
+# Esto permite ejecutar el programa directamente
+if __name__ == "__main__":
+    main()
