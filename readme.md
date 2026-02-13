@@ -1,6 +1,6 @@
 ## Autor
 
-Diego 
+Diego Muñoz Lasanta
 Proyecto desarrollado para el Módulo 4 – ABP  
 Gestor Inteligente de Clientes (GIC)
 
@@ -12,18 +12,18 @@ La arquitectura modular permite separar responsabilidades y facilita el mantenim
 
 El diseño se basa en un modelo UML compuesto por:
 
-- Clase base `Cliente`
+- Clase base Cliente
 - Subclases:
-  - `Cliente_Regular`
-  - `Cliente_Premium`
-  - `Cliente_Corporativo`
-- Clase `GestorClientes`, encargada de administrar múltiples clientes.
+  - Cliente_Regular
+  - Cliente_Premium
+  - Cliente_Corporativo
+- Clase GestorClientes, encargada de administrar múltiples clientes.
 
 ### Relaciones implementadas
 
-- **Herencia:** Las subclases extienden la clase base `Cliente`.
-- **Polimorfismo:** Sobrescritura del método `__str__()` en subclases.
-- **Composición:** `GestorClientes` contiene múltiples instancias de `Cliente`.
+- **Herencia:** Las subclases extienden la clase base Cliente.
+- **Polimorfismo:** Sobrescritura del método __str__() en subclases.
+- **Composición:** GestorClientes contiene múltiples instancias de Cliente.
 
 El UML corresponde directamente con la implementación real del sistema.
 
@@ -32,15 +32,15 @@ El UML corresponde directamente con la implementación real del sistema.
 ## Aplicación de Programación Orientada a Objetos
 
 ### Encapsulación
-Los atributos se declaran como protegidos (`_atributo`) y se accede a ellos mediante métodos `get`.
+Los atributos se declaran como protegidos (_atributo) y se accede a ellos mediante métodos get.
 
-Se reconoce como posible mejora futura la incorporación de métodos `set` para reforzar aún más la encapsulación en procesos de edición.
+Se reconoce como posible mejora futura la incorporación de métodos set para reforzar aún más la encapsulación en procesos de edición.
 
 ### Herencia
-Las clases `Cliente_Regular`, `Cliente_Premium` y `Cliente_Corporativo` reutilizan la lógica de la clase base mediante `super()`.
+Las clases Cliente_Regular, Cliente_Premium y Cliente_Corporativo reutilizan la lógica de la clase base mediante super().
 
 ### Polimorfismo
-Las subclases sobrescriben el método `__str__()` para mostrar información específica según el tipo de cliente.
+Las subclases sobrescriben el método __str__() para mostrar información específica según el tipo de cliente.
 
 ---
 
@@ -50,33 +50,33 @@ El sistema implementa:
 
 - Validación de email.
 - Excepciones personalizadas:
-  - `ClienteError`
-  - `ClienteDuplicadoError`
-  - `ClienteNoEncontradoError`
-  - `ValidacionError`
-- Uso de `try-except` en la interfaz principal.
-- Registro de eventos mediante la librería estándar `logging`.
+  - ClienteError
+  - ClienteDuplicadoError
+  - ClienteNoEncontradoError
+  - ValidacionError
+- Uso de try-except en la interfaz principal.
+- Registro de eventos mediante la librería estándar logging.
 
-Actualmente existe una validación básica en la clase base y una validación centralizada en el módulo `utilidades.validaciones`. Como mejora futura, ambas podrían unificarse para evitar redundancias y fortalecer la coherencia del diseño.
+Actualmente existe una validación básica en la clase base y una validación centralizada en el módulo utilidades.validaciones. Como mejora futura, ambas podrían unificarse para evitar redundancias y fortalecer la coherencia del diseño.
 
 ---
 
 ## Persistencia de Datos
 
-La información se almacena en un archivo `clientes.json`.
+La información se almacena en un archivo clientes.json.
 
 Se implementa:
 
 - Serialización manual de objetos.
 - Reconstrucción de objetos según su tipo.
 - Manejo de errores en lectura/escritura.
-- Uso de la librería estándar `json`.
+- Uso de la librería estándar json.
 
 ---
 
 ## Pruebas Unitarias
 
-Se desarrollaron pruebas utilizando `unittest` para validar:
+Se desarrollaron pruebas utilizando unit test para validar:
 
 - Creación de clientes.
 - Validación de descuentos.
@@ -96,7 +96,7 @@ Las pruebas permiten verificar el correcto funcionamiento del sistema.
 - Listar clientes.
 - Validar datos ingresados.
 - Persistir información en JSON.
-- Registrar actividad del sistema en archivo `gic.log`.
+- Registrar actividad del sistema en archivo gic.log.
 
 ---
 
