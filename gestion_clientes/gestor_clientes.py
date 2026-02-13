@@ -1,56 +1,51 @@
-"""
-Este módulo contiene la clase GestorClientes.
-Es para administrar los clientes del sistema.
-
-La estructura interna la haré con:
-- Un diccionario
-- Con listas para cada tipo de cliente
-"""
+# Este módulo contiene la clase GestorClientes.
+# Aquí vive la lógica del sistema.
+# Main solo llama métodos, pero quien realmente trabaja es el gestor.
 
 # Importamos la clase base Cliente
-from clientes.cliente import Cliente
+from clientes.clientes import Cliente
 
-# Importamos las subclases para poder identificar el tipo
+# Importamos las subclases
 from clientes.cliente_regular import ClienteRegular
-from clientes.cliente_premium import ClientePremium
-from clientes.cliente_corporativo import ClienteCorporativo
-
-### No se han creado aun las clases ni las fubnciones ###
-### Sólo traigo esquema inicial de ABP 3 ###
+from clientes.cliente_premium import Cliente_Premium
+from clientes.cliente_corporativo import Cliente_Corporativo
 
 
 class GestorClientes:
-    """
-    Clase GestorClientes
-    Esta clase sólo maneja el sistema
-    """
+    # Esta clase administra todos los clientes del sistema.
+    # Guarda, busca, lista y elimina.
 
     def __init__(self):
-
-        # Para crear el diccionario ---> revisar si la clase es privada o protegida
+        # Creamos un diccionario para organizar clientes por tipo.
+        # Cada tipo tiene su propia lista.
         self._clientes = {
             "regular": [],
             "premium": [],
             "corporativo": []
         }
 
-        # Aqui ya se agrega un cliente al sistema--->Ver donde se almacena !!!
-
     def agregar_cliente(self, cliente):
-
-        # Validamos que sea un objeto Cliente
+        # Primero verificamos que el objeto realmente sea un Cliente.
+        # Si no es un Cliente, no lo aceptamos.
         if not isinstance(cliente, Cliente):
-            print("Error: el objeto (clase) no es un Cliente válido.")
+            print("Error: el objeto no es un Cliente válido.")
             return
 
-        # Determinamos el tipo de cliente
+        # Antes de agregar, revisamos que no exista otro cliente con el mismo ID.
+        if self.buscar_cliente(cliente.get_id()) is not None:
+            print("Error: ya existe un cliente con ese ID.")
+            return
+
+        # Ahora identificamos qué tipo de cliente es.
+        # Según su tipo, lo agregamos a la lista correspondiente.
+
         if isinstance(cliente, ClienteRegular):
             self._clientes["regular"].append(cliente)
 
-        elif isinstance(cliente, ClientePremium):
+        elif isinstance(cliente, Cliente_Premium):
             self._clientes["premium"].append(cliente)
 
-        elif isinstance(cliente, ClienteCorporativo):
+        elif isinstance(cliente, Cliente_Corporativo):
             self._clientes["corporativo"].append(cliente)
 
         else:
@@ -60,48 +55,49 @@ class GestorClientes:
         print("Cliente agregado correctamente.")
 
     def listar_clientes(self):
-        """
-        Muestra todos los clientes registrados en el sistema,
-        organizados por tipo.
-        """
-
-        # Verificamos si hay al menos un cliente registrado
+        # Primero verificamos si el sistema está completamente vacío.
+        # Si todas las listas están vacías, avisamos.
         if all(len(lista) == 0 for lista in self._clientes.values()):
             print("No hay clientes registrados.")
             return
 
-        print("Listado de clientes")
+        print("\n=== Listado de Clientes ===")
 
-        # Poner Separador visual
-
-        # Recorremos el diccionario de clientes
+        # Recorremos cada tipo dentro del diccionario.
         for tipo, lista_clientes in self._clientes.items():
 
             print(f"\nClientes tipo {tipo.capitalize()}:")
 
-            # Poner Separador visual
-
-            # Si no hay clientes de ese tipo, lo indicamos
+            # Si esa lista específica está vacía, lo indicamos.
             if not lista_clientes:
                 print("No hay clientes de este tipo.")
                 continue
 
-            # Recorremos la lista de clientes del tipo actual
+            # Si sí hay clientes, los mostramos uno por uno.
             for cliente in lista_clientes:
                 print(cliente)
 
-    def eliminar_cliente(self, id_cliente):
-        """
-        Elimina un cliente del sistema según su ID.
-
-        Parámetro:
-        id_cliente: identificador del cliente a eliminar
-        """
-
-        # Recorremos todas las listas del diccionario---> Apoyo Italo
+    def buscar_cliente(self, id_cliente):
+        # Este método busca un cliente por su ID.
+        # Recorremos todas las listas del diccionario.
         for lista_clientes in self._clientes.values():
             for cliente in lista_clientes:
                 if cliente.get_id() == id_cliente:
+                    return cliente  # Si lo encuentra, lo devuelve
+
+        # Si termina el recorrido y no encontró nada,
+        # devolvemos None.
+        return None
+
+    def eliminar_cliente(self, id_cliente):
+        # Recorremos todas las listas para buscar el cliente.
+        for lista_clientes in self._clientes.values():
+            for cliente in lista_clientes:
+                if cliente.get_id() == id_cliente:
+                    # Si lo encontramos, lo eliminamos.
                     lista_clientes.remove(cliente)
                     print("Cliente eliminado correctamente.")
                     return
+
+        # Si no se encontró en ninguna lista:
+        print("Cliente no encontrado.")
