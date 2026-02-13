@@ -9,38 +9,83 @@ from clientes.clientes import Cliente
 from clientes.cliente_regular import Cliente_Regular
 from clientes.cliente_premium import Cliente_Premium
 from clientes.cliente_corporativo import Cliente_Corporativo
-from persistencia.cliente_json import guardar_clientes, cargar_clientes
 
+from persistencia.clientes_json import guardar_clientes, cargar_clientes
+from utilidades.excepciones import (
+    ClienteDuplicadoError,
+    ClienteNoEncontradoError,
+    ValidacionError
+)
+
+from utilidades.bitacora_de_registros import registrar_evento
 
 
 class GestorClientes:
     # Esta clase administra todos los clientes del sistema.
-    # Guarda, busca, lista y elimina.
 
     def __init__(self):
-        # Creamos un diccionario para organizar clientes por tipo.
-        # Cada tipo tiene su propia lista.
+
+        # Cargamos los datos desde JSON
+        datos = cargar_clientes()
+
         self._clientes = {
             "regular": [],
             "premium": [],
             "corporativo": []
         }
 
-    def agregar_cliente(self, cliente):
-        # Primero verificamos que el objeto realmente sea un Cliente.
-        # Si no es un Cliente, no lo aceptamos.
+        # Reconstruimos objetos Cliente desde los datos cargados
+        for tipo, lista in datos.items():
 
-        if not isinstance(cliente, Cliente):   # Ref. Clase 1 ---> animal.py
-            print("Error: el objeto no es un Cliente válido.")
-            return
+            for datos_cliente in lista:
 
-        # Antes de agregar, revisamos que no exista otro cliente con el mismo ID.
+                if tipo == "regular":
+                    cliente = Cliente_Regular(
+                        datos_cliente["_id"],
+                        datos_cliente["_nombre"],
+                        datos_cliente["_email"],
+                        datos_cliente["_estado"]
+                    )
+
+                elif tipo == "premium":
+                    cliente = Cliente_Premium(
+                        datos_cliente["_id"],
+                        datos_cliente["_nombre"],
+                        datos_cliente["_email"],
+                        datos_cliente["_descuento"],
+                        datos_cliente["_estado"]
+                    )
+
+                elif tipo == "corporativo":
+                    cliente = Cliente_Corporativo(
+                        datos_cliente["_id"],
+                        datos_cliente["_nombre"],
+                        datos_cliente["_email"],
+                        datos_cliente["_razon_social"],
+                        datos_cliente["_rut_empresa"],
+                        datos_cliente["_contacto"],
+                        datos_cliente["_estado"]
+                    )
+
+                self._clientes[tipo].append(cliente)
+
+    # ---------------- CREAR CLIENTES ----------------
+
+    def crear_cliente_regular(self, id_cliente, nombre, email):
+
+        cliente = Cliente_Regular(id_cliente, nombre, email)
+
+        if not cliente.validar_email():
+            raise ValidacionError("Email inválido.")
+
+        self._agregar_cliente(cliente)
+
+    # ---------------- MÉTODOS INTERNOS ----------------
+
+    def _agregar_cliente(self, cliente):
+
         if self.buscar_cliente(cliente.get_id()) is not None:
-            print("Error: ya existe un cliente con ese ID.")
-            return
-
-        # Ahora identificamos qué tipo de cliente es.
-        # Según su tipo, lo agregamos a la lista correspondiente.
+            raise ClienteDuplicadoError("Ya existe un cliente con ese ID.")
 
         if isinstance(cliente, Cliente_Regular):
             self._clientes["regular"].append(cliente)
@@ -51,56 +96,51 @@ class GestorClientes:
         elif isinstance(cliente, Cliente_Corporativo):
             self._clientes["corporativo"].append(cliente)
 
-        else:
-            print("Tipo de cliente no reconocido.")
-            return
+        guardar_clientes(self._clientes)
+        registrar_evento("Cliente agregado correctamente.")
 
-        print("Cliente agregado correctamente.")
+    # ---------------- LISTAR ----------------
 
     def listar_clientes(self):
-        # Primero verificamos si el sistema está completamente vacío.
-        # Si todas las listas están vacías, avisamos.
+
         if all(len(lista) == 0 for lista in self._clientes.values()):
             print("No hay clientes registrados.")
             return
 
         print("\n=== Listado de Clientes ===")
 
-        # Recorremos cada tipo dentro del diccionario.
         for tipo, lista_clientes in self._clientes.items():
 
-            print(f"Clientes tipo {tipo.capitalize()}:")
+            print(f"\nClientes tipo {tipo.capitalize()}:")
 
-            # Si esa lista específica está vacía, lo indicamos.
             if not lista_clientes:
                 print("No hay clientes de este tipo.")
                 continue
 
-            # Si sí hay clientes, los mostramos uno por uno.
             for cliente in lista_clientes:
                 print(cliente)
 
+    # ---------------- BUSCAR ----------------
+
     def buscar_cliente(self, id_cliente):
-        # Este método busca un cliente por su ID.
-        # Recorremos todas las listas del diccionario.
+
         for lista_clientes in self._clientes.values():
             for cliente in lista_clientes:
                 if cliente.get_id() == id_cliente:
-                    return cliente  # Si lo encuentra, lo devuelve
+                    return cliente
 
-        # Si termina el recorrido y no encontró nada,
-        # devolvemos None.
         return None
 
+    # ---------------- ELIMINAR ----------------
+
     def eliminar_cliente(self, id_cliente):
-        # Recorremos todas las listas para buscar el cliente.
+
         for lista_clientes in self._clientes.values():
             for cliente in lista_clientes:
                 if cliente.get_id() == id_cliente:
-                    # Si lo encontramos, lo eliminamos.
                     lista_clientes.remove(cliente)
-                    print("Cliente eliminado correctamente.")
+                    guardar_clientes(self._clientes)
+                    registrar_evento("Cliente eliminado correctamente.")
                     return
 
-        # Si no se encontró en ninguna lista:
-        print("Cliente no encontrado.")
+        raise ClienteNoEncontradoError("Cliente no encontrado.")

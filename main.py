@@ -4,6 +4,7 @@
 # No maneja datos directamente ni contiene lógica de negocio.
 
 from gestion_clientes.gestor_clientes import GestorClientes
+from utilidades.excepciones import ClienteError
 
 
 def main():
@@ -14,28 +15,45 @@ def main():
     print("Gestor Inteligente de Clientes")
 
     while True:
-        print("Seleccione una opción:")
-        print("1. Agregar cliente (demo)")
+        print("\nSeleccione una opción:")
+        print("1. Agregar cliente regular")
         print("2. Listar clientes")
-        print("3. Salir")
+        print("3. Eliminar cliente")
+        print("4. Salir")
 
         opcion = input("Opción: ")
 
-        if opcion == "1":
-            # Aquí solo demostramos cómo se llamaría al gestor.
-            # La lógica real debe estar dentro de GestorClientes.
-            print("Funcionalidad de agregar cliente aún en construcción.")
+        try:
 
-        elif opcion == "2":
-            # Le pedimos al gestor que muestre los clientes.
-            gestor.listar_clientes()
+            if opcion == "1":
+                id_cliente = input("ID: ")
+                nombre = input("Nombre: ")
+                email = input("Email: ")
 
-        elif opcion == "3":
-            print("Saliendo del sistema...")
-            break
+                gestor.crear_cliente_regular(id_cliente, nombre, email)
 
-        else:
-            print("Opción no válida. Intente nuevamente.")
+            elif opcion == "2":
+                gestor.listar_clientes()
+
+            elif opcion == "3":
+                id_cliente = input("ID a eliminar: ")
+                gestor.eliminar_cliente(id_cliente)
+
+            elif opcion == "4":
+                print("Saliendo del sistema...")
+                break
+
+            else:
+                print("Opción no válida. Intente nuevamente.")
+
+        except ClienteError as e:
+            # Capturamos errores personalizados del sistema
+            print("Error:", e)
+
+        except Exception as e:
+            # Cualquier otro error inesperado
+            print("Error inesperado:", e)
+
 
 # Esto permite ejecutar el programa directamente
 if __name__ == "__main__":
