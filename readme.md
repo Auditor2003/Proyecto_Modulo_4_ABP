@@ -1,6 +1,7 @@
 ## Autor
 
-Diego  
+Diego Muñoz Lasanta
+
 Proyecto ABP - Módulo 4
 
 # Gestor Inteligente de Clientes (GIC)
