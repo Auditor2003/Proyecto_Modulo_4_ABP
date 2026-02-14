@@ -21,6 +21,8 @@ def main():
         print("3. Eliminar cliente")
         print("4. Salir")
 
+
+        # Uso try/Except Ref. Clase 7 M4 --> Ej. ejemplo_try_except.py y Clase 10 M4 --> archivo_seguro.py 
         opcion = input("Opción: ")
 
         try:

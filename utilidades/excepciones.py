@@ -3,7 +3,7 @@ Según lo indicado por el profe este módulo contiene excepciones personalizadas
 nos permite manejar errores de forma más profesional.
 
 """
-# Clase 8 --> Ej--> validar.edad.py y Clase 10 --> archivo_seguro.py 
+# Uso Excepciones Ref. Clase 8 --> Ej--> validar.edad.py y Clase 10 --> archivo_seguro.py 
 
 class ClienteError(Exception):
     

@@ -1,5 +1,8 @@
 # Este archivo prueba las clases Cliente y sus subclases.
 
+# Bibliografia uso Unittest https://ellibrodepython.com/python-testing#tests-unitarios-en-python-con-unittest
+# Apoyo Ingeniero Inf. Italo Muñoz
+
 import unittest
 
 from clientes.clientes import Cliente
@@ -28,7 +31,7 @@ class TestClientes(unittest.TestCase):
 
     def test_validar_email(self):
 
-        cliente = Cliente("2", "Ana", "ana@email.com")
+        cliente = Cliente("2", "Jose", "jose@email.com")
 
         self.assertTrue(cliente.validar_email())
 
@@ -38,7 +41,7 @@ class TestClientes(unittest.TestCase):
 
     def test_descuento_valido(self):
 
-        premium = Cliente_Premium("3", "Luis", "luis@email.com", 20)
+        premium = Cliente_Premium("3", "Jesus", "jesus@email.com", 20)
 
         self.assertEqual(premium.get_descuento(), 20)
 
@@ -49,7 +52,7 @@ class TestClientes(unittest.TestCase):
     def test_descuento_invalido(self):
 
         with self.assertRaises(ValueError):
-            Cliente_Premium("4", "Sofia", "sofia@email.com", 150)
+            Cliente_Premium("4", "Yerko", "yerko@email.com", 150)
 
 
 # Esto permite ejecutar las pruebas directamente

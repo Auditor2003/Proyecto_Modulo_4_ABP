@@ -8,8 +8,12 @@ class Cliente_Corporativo(Cliente):
     # Cliente empresa.
     # Agrega razón social, RUT y contacto.
 
+    # Ref. Clase 1 M4 --> Ej. libro_control_stock.py
+
     def __init__(self, id_cliente, nombre, email, razon_social, rut_empresa, contacto, estado=True):
         # Constructor del cliente corporativo.
+
+        # uso super()  Ref. Clase 5 M4 --> Ej. herencia_transporte.py
 
         super().__init__(id_cliente, nombre, email, estado)
 

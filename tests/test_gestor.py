@@ -1,4 +1,6 @@
 # Este archivo prueba la clase GestorClientes.
+# Bibliografia uso Unittest https://ellibrodepython.com/python-testing#tests-unitarios-en-python-con-unittest
+# Apoyo Ingeniero Inf. Italo Muñoz
 
 import unittest
 

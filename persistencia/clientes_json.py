@@ -2,6 +2,10 @@
 # Se encarga de la persistencia de datos, es decir,
 # permite guardar y cargar clientes utilizando archivos JSON.
 
+# Uso Json Clase 10 M4 --> Ej. archivo_segro.py - obtener_datos.py
+# Uso Json Clase 9 M4 --> leer_datos.py
+
+
 import json
 import os
 

@@ -7,6 +7,8 @@ class Cliente:
     # Clase base donde viven los datos comunes
     # a todos los tipos de clientes.
 
+    # Uso get_variable Ref. Clase 2 Ej. control_precio.py - cuenta_corriente.py
+
     def __init__(self, id_cliente, nombre, email, estado=True):
         # Constructor base.
         # Guarda la información principal del cliente.

@@ -9,6 +9,8 @@ class Cliente_Regular(Cliente):
     # Hereda todo de Cliente.
     # No agrega nada nuevo.
 
+    # Ref. Clase 2 M4 --> Ej. correo.py
+
     def __init__(self, id_cliente, nombre, email, estado=True):
         # Solo llama al constructor del padre.
         super().__init__(id_cliente, nombre, email, estado)
