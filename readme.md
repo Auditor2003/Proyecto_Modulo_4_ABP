@@ -78,4 +78,28 @@ Como mejora futura, la encapsulación podría reforzarse mediante el uso de mét
 
 ---
 
+## Fuentes bibliográficas Utilizadas
+
+- Uso def __init__() Ref. Clase 2 M4 --> Ej. correo.py -->  # Ref. Clase 1 M4 --> Ej. libro_control_stock.py
+
+- Uso get_variable Ref. Clase 2 Ej. control_precio.py - cuenta_corriente.py
+
+- Uso super()  Ref. Clase 5 M4 --> Ej. herencia_transporte.py
+
+- Uso Json Clase 10 M4 --> Ej. archivo_segro.py - obtener_datos.py
+
+- Uso Json Clase 9 M4 --> leer_datos.py
+
+- Bibliografia uso Unittest https://ellibrodepython.com/python-testing#tests-unitarios-en-python-con-unittest
+
+- Uso archivos con ext. log - Ref. Clase 9 M4 --> Ej. ejercicio_final.py - metodo_readline.py
+
+- Uso Excepciones Ref. Clase 8 --> Ej--> validar.edad.py y Clase 10 --> archivo_seguro.py 
+
+- Uso de Validaciones simples Ref. Clase 7 M4 --> Ej. validar_entrada_numerica.py - jerarquia:errores.py
+
+- Uso try/Except Ref. Clase 7 M4 --> Ej. ejemplo_try_except.py y Clase 10 M4 --> archivo_seguro.py 
+
+- Apoyo Ingeniero Informático Duoc Sr. Italo Muñoz Pomar
+
 
