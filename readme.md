@@ -78,7 +78,7 @@ Como mejora futura, la encapsulación podría reforzarse mediante el uso de mét
 
 ---
 
-## Fuentes bibliográficas Utilizadas
+## Fuentes Bibliográficas Utilizadas
 
 - Uso def __init__() Ref. Clase 2 M4 --> Ej. correo.py -->  # Ref. Clase 1 M4 --> Ej. libro_control_stock.py
 
