@@ -14,14 +14,15 @@ El sistema permite gestionar distintos tipos de clientes, aplicar validaciones, 
 
 ## Estructura del Proyecto
 
-Proyecto_Modulo_4_ABP  
-├── clientes/  
-├── gestion_clientes/  
-├── persistencia/  
-├── utilidades/  
-├── test/  
-├── main.py  
-└── README.md  
+Proyecto_Modulo_4_ABP
+
+--> clientes/  
+--> gestion_clientes/  
+--> persistencia/  
+--> utilidades/  
+--> test/  
+--> main.py  
+--> README.md  
 
 La arquitectura está organizada por módulos para separar responsabilidades y facilitar el mantenimiento.
 
