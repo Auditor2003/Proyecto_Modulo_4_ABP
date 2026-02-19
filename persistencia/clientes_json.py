@@ -13,14 +13,6 @@ RUTA_ARCHIVO = "clientes.json"
 
 
 def guardar_clientes(diccionario_clientes):
-    """
-    Recibe el diccionario del gestor:
-    {
-        "10": Cliente_Regular(...),
-        "20": Cliente_Premium(...)
-    }
-    y lo convierte a algo serializable.
-    """
 
     datos_serializables = []
 
@@ -34,11 +26,9 @@ def guardar_clientes(diccionario_clientes):
             "estado": cliente.get_estado()
         }
 
-        # Si es premium agregamos descuento
         if hasattr(cliente, "_descuento"):
             datos["descuento"] = cliente.get_descuento()
 
-        # Si es corporativo agregamos datos empresa
         if hasattr(cliente, "_razon_social"):
             datos["razon_social"] = cliente._razon_social
             datos["rut_empresa"] = cliente._rut_empresa
@@ -55,9 +45,6 @@ def guardar_clientes(diccionario_clientes):
 
 
 def cargar_clientes():
-    """
-    Devuelve una lista de diccionarios con los datos guardados.
-    """
 
     if not os.path.exists(RUTA_ARCHIVO):
         return []

@@ -3,70 +3,79 @@
 # Este archivo solo controla el programa.
 # No maneja datos directamente ni contiene lógica de negocio.
 
+
 from gestion_clientes.gestor_clientes import GestorClientes
-from utilidades.excepciones import ClienteError
 
 
 def main():
-    # Creamos el gestor.
-    # Él es el que sabe realmente cómo trabajar con los clientes.
+
     gestor = GestorClientes()
 
     print("Gestor Inteligente de Clientes")
 
     while True:
-        print("\nSeleccione una opción:")
-        print("1. Agregar cliente regular")
+        print("Seleccione una opción:")
+        print("1. Agregar cliente")
         print("2. Listar clientes")
         print("3. Eliminar cliente")
-        print("4. Salir")
+        print("4. Editar cliente")
+        print("5. Salir")
 
-
-        # Uso try/Except Ref. Clase 7 M4 --> Ej. ejemplo_try_except.py y Clase 10 M4 --> archivo_seguro.py 
         opcion = input("Opción: ")
 
-        try:
+        if opcion == "1":
+            print("Tipo de cliente:")
+            print("1. Regular")
+            print("2. Premium")
+            print("3. Corporativo")
 
-            if opcion == "1":
-                id_cliente = input("ID: ")
-                nombre = input("Nombre: ")
-                email = input("Email: ")
+            tipo = input("Tipo: ")
 
+            id_cliente = input("ID: ")
+            nombre = input("Nombre: ")
+            email = input("Email: ")
+
+            if tipo == "1":
                 gestor.crear_cliente_regular(id_cliente, nombre, email)
-                print("Cliente agregado correctamente.")
 
-            elif opcion == "2":
-                clientes = gestor.listar_clientes()
+            elif tipo == "2":
+                descuento = float(input("Descuento (%): "))
+                gestor.crear_cliente_premium(id_cliente, nombre, email, descuento)
 
-                if not clientes:
-                    print("No hay clientes registrados.")
-                else:
-                    print("\nLista de clientes:")
-                    for cliente in clientes:
-                        print(cliente)
+            elif tipo == "3":
+                razon_social = input("Razón social: ")
+                rut_empresa = input("RUT empresa: ")
+                contacto = input("Contacto: ")
 
-            elif opcion == "3":
-                id_cliente = input("ID a eliminar: ")
-                gestor.eliminar_cliente(id_cliente)
-                print("Cliente eliminado correctamente.")
-
-            elif opcion == "4":
-                print("Saliendo del sistema...")
-                break
+                gestor.crear_cliente_corporativo(
+                    id_cliente, nombre, email,
+                    razon_social, rut_empresa, contacto
+                )
 
             else:
-                print("Opción no válida. Intente nuevamente.")
+                print("Tipo inválido.")
 
-        except ClienteError as e:
-            # Capturamos errores personalizados del sistema
-            print("Error:", e)
+        elif opcion == "2":
+            for c in gestor.listar_clientes():
+                print(c)
 
-        except Exception as e:
-            # Cualquier otro error inesperado
-            print("Error inesperado:", e)
+        elif opcion == "3":
+            id_eliminar = input("ID cliente a eliminar: ")
+            gestor.eliminar_cliente(id_eliminar)
+
+        elif opcion == "4":
+            id_cliente = input("ID a editar: ")
+            nombre = input("Nuevo nombre: ")
+            email = input("Nuevo email: ")
+            gestor.editar_cliente(id_cliente, nombre, email)
+
+        elif opcion == "5":
+            print("Saliendo del sistema...")
+            break
+
+        else:
+            print("Opción no válida.")
 
 
-# Esto permite ejecutar el programa directamente
 if __name__ == "__main__":
     main()
-

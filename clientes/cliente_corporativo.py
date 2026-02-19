@@ -4,16 +4,10 @@
 
 from clientes.clientes import Cliente
 
-class Cliente_Corporativo(Cliente):
-    # Cliente empresa.
-    # Agrega razón social, RUT y contacto.
 
-    # Ref. Clase 1 M4 --> Ej. libro_control_stock.py
+class ClienteCorporativo(Cliente):
 
     def __init__(self, id_cliente, nombre, email, razon_social, rut_empresa, contacto, estado=True):
-        # Constructor del cliente corporativo.
-
-        # uso super()  Ref. Clase 5 M4 --> Ej. herencia_transporte.py
 
         super().__init__(id_cliente, nombre, email, estado)
 
@@ -22,11 +16,8 @@ class Cliente_Corporativo(Cliente):
         self._contacto = contacto
 
     def __str__(self):
-        # Muestra la info completa,
-        # incluyendo datos de empresa.
         base = super().__str__()
         return (
             f"{base} | Empresa: {self._razon_social} "
             f"| RUT: {self._rut_empresa} | Contacto: {self._contacto}"
         )
-
